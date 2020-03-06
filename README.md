@@ -3,7 +3,7 @@
 ## Lab 1
 
 ### App Description
-`TODO://` Add app description
+Created a basic flashcard app that allows the user to select the correct answer to a provided question. Functionality such as colors to indicate the right and wrong answers as well as toggling between showing the correct answers and not showing them is provided.
 
 ### App Walk-though
 `TODO://` Add the URL to your animated app walk-though `gif` in the image tag below. Make sure the gif actually renders and animates when viewing this README. (☝️ Remove this paragraph after after adding gif)
