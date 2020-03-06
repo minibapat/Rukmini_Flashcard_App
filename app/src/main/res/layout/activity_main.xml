@@ -15,6 +15,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="-3dp"
         android:gravity="center"
+        android:background="@drawable/card_background"
+        android:elevation="10dp"
         android:text="What is the capital of France?"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,8 +32,77 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="3dp"
         android:gravity="center"
+        android:background="@drawable/answercard_background"
+        android:elevation="10dp"
         android:text="Paris"
         android:visibility="invisible"
         android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/answer1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="268dp"
+        android:background="#EDB949"
+        android:gravity="center"
+        android:text="Rome"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/answer2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="351dp"
+        android:background="#EDB949"
+        android:gravity="center"
+        android:text="Paris"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/answer3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="431dp"
+        android:layout_marginEnd="1dp"
+        android:background="#EDB949"
+        android:gravity="center"
+        android:text="Athens"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/toggle_choices_visibilityoff"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="523dp"
+        android:layout_marginEnd="185dp"
+        android:layout_marginRight="185dp"
+        android:src="@drawable/ic_iconmonstr_eye_thin" />
+
+    <ImageView
+        android:id="@+id/toggle_choices_visibility"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="522dp"
+        android:layout_marginEnd="185dp"
+        android:layout_marginRight="185dp"
+        android:src="@drawable/ic_iconmonstr_eye_off_thin" />
+
 
 </RelativeLayout>
