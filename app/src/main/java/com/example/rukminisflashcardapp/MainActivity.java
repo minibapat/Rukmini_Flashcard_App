@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.util.List;
+import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
     private TextView Answer;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         flashcardDatabase = new FlashcardDatabase(getApplicationContext());
         allFlashcards = flashcardDatabase.getAllCards();
         if (allFlashcards != null && allFlashcards.size() > 0) {
@@ -129,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
             }
         });
+
 
     }
 
