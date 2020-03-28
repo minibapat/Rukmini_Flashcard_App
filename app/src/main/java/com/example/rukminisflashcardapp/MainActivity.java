@@ -2,9 +2,14 @@ package com.example.rukminisflashcardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.content.Intent;
@@ -17,18 +22,29 @@ public class MainActivity extends AppCompatActivity {
     FlashcardDatabase flashcardDatabase;
     List<Flashcard> allFlashcards;
     int currentCardDisplayedIndex = 0;
+    CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        countDownTimer = new CountDownTimer(16000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                ((TextView) findViewById(R.id.timer)).setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+            }
+        };
         flashcardDatabase = new FlashcardDatabase(getApplicationContext());
         allFlashcards = flashcardDatabase.getAllCards();
         if (allFlashcards != null && allFlashcards.size() > 0) {
             ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(0).getQuestion());
             ((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(0).getAnswer());
         }
+        startTimer();
 
         findViewById(R.id.flashcard_question).setOnClickListener(new OnClickListener() {
             @Override
@@ -42,6 +58,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 findViewById(R.id.flashcard_answer).setVisibility(View.VISIBLE);
                 findViewById(R.id.flashcard_question).setVisibility(View.INVISIBLE);
+                View answerSideView = findViewById(R.id.flashcard_answer);
+                View questionSideView = findViewById(R.id.flashcard_question);
+
+                int cx = answerSideView.getWidth() / 2;
+                int cy = answerSideView.getHeight() / 2;
+
+                float finalRadius = (float) Math.hypot(cx, cy);
+
+                Animator anim = ViewAnimationUtils.createCircularReveal(answerSideView, cx, cy, 0f, finalRadius);
+
+                questionSideView.setVisibility(View.INVISIBLE);
+                answerSideView.setVisibility(View.VISIBLE);
+
+                anim.setDuration(1500);
+                anim.start();
                 Answer = findViewById(R.id.flashcard_answer);
                 Answer.setOnClickListener(new OnClickListener() {
                     @Override
@@ -112,12 +143,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
                 MainActivity.this.startActivityForResult(intent, 100);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
         findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startTimer();
                 // advance our pointer index so we can show the next card
                 currentCardDisplayedIndex++;
 
@@ -129,10 +162,38 @@ public class MainActivity extends AppCompatActivity {
                 // set the question and answer TextViews with data from the database
                 ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
                 ((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
+
+                final Animation leftOutAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.left_out);
+                final Animation rightInAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.right_in);
+                leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        // this method is called when the animation first starts
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // this method is called when the animation is finished playing
+                        findViewById(R.id.flashcard_question).startAnimation(rightInAnim);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                        // we don't need to worry about this method
+                    }
+                });
+                findViewById(R.id.flashcard_question).startAnimation(leftOutAnim);
+
+
             }
         });
 
 
+    }
+
+    private void startTimer() {
+        countDownTimer.cancel();
+        countDownTimer.start();
     }
 
     @Override

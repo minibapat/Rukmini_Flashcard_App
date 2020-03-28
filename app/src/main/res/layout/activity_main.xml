@@ -132,7 +132,16 @@
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_next_icon" />
 
-
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="222dp"
+        android:text="TextView"
+        android:textColor="#C70D0D"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>
